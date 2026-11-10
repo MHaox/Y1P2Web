@@ -1,0 +1,149 @@
+body {
+    background-color: #0bf50b; /* Geen fel groen meer als testachtergrond */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Het canvas is exact 1000px breed en 600px hoog. 
+   De zwarte achtergrond vormt samen met de borders het raster. */
+.mondriaan-canvas {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    height: 600px;
+    background-color: black;
+    border: 5px solid black;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    overflow: hidden; /* Zorgt dat niets kan uitbreken */
+}
+
+.row {
+    display: flex;
+    width: 1000px;
+    box-sizing: border-box;
+}
+
+.top-row {
+    height: 300px;
+}
+
+.bottom-row {
+    height: 300px;
+    border-top: 5px solid black;
+}
+
+/* Kolommen in de bovenste rij */
+.col {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    box-sizing: border-box;
+}
+
+.col-1 {
+    width: 150px;
+}
+
+.col-4 {
+    width: 400px;
+    border-left: 5px solid black;
+}
+
+.col-5 {
+    width: 100px;
+    border-left: 5px solid black;
+}
+
+/* Algemene cel / vlak instellingen */
+.cell {
+    background-color: white;
+    box-sizing: border-box;
+    padding: 6px;
+}
+
+/* --- Vlakken Bovenste Rij --- */
+.a {
+    width: 150px;
+    height: 50px;
+}
+
+.f {
+    width: 150px;
+    height: 250px;
+    background-color: yellow;
+    border-top: 5px solid black;
+}
+
+.b {
+    width: 300px;
+    height: 300px;
+    background-color: blue;
+    border-left: 5px solid black;
+}
+
+.c {
+    width: 50px;
+    height: 300px;
+    border-left: 5px solid black;
+}
+
+.d {
+    width: 400px;
+    height: 50px;
+    background-color: yellow;
+}
+
+.g {
+    width: 400px;
+    height: 250px;
+    background-color: blue;
+    border-top: 5px solid black;
+}
+
+.e {
+    width: 100px;
+    height: 50px;
+}
+
+.h {
+    width: 100px;
+    height: 250px;
+    border-top: 5px solid black;
+}
+
+/* --- Vlakken Onderste Rij --- */
+.i {
+    width: 150px;
+    height: 300px;
+}
+
+.j {
+    width: 450px;
+    height: 300px;
+    background-color: red;
+    border-left: 5px solid black;
+}
+
+.k {
+    width: 250px;
+    height: 300px;
+    border-left: 5px solid black;
+}
+
+.l {
+    width: 50px;
+    height: 300px;
+    border-left: 5px solid black;
+}
+
+.m {
+    width: 100px;
+    height: 300px;
+    background-color: red;
+    border-left: 5px solid black;
+}

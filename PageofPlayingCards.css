@@ -1,0 +1,79 @@
+body {
+    background-color: #064e3b;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    padding: 2rem;
+}
+
+h1 {
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* User Story 5 & Tests 8-11 */
+#playing-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* User Story 3, 6 & Tests 3, 12, 13 */
+.card {
+    width: 140px;
+    height: 210px;
+    background-color: #ffffff;
+    color: #1e293b;
+    border-radius: 10px;
+    padding: 12px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.card.heart, .card.diamond {
+    color: #dc2626;
+}
+
+.card.spade {
+    color: #0f172a;
+}
+
+/* User Story 7 & Test 14 */
+.left {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+    font-size: 1rem;
+}
+
+/* User Story 8, 10 & Tests 15, 17, 18 */
+.middle {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+/* User Story 9 & Test 16 */
+.right {
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+    font-size: 1rem;
+    transform: rotate(180deg);
+}
