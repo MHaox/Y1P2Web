@@ -1,32 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio Hub</title>
+    <title>Curriculum Vitae - Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Project Hub</h1>
-        <p class="subtitle">Select a project or workshop to explore</p>
-    </header>
-
-    <nav>
-        <a href="./RecipePage.html">Recipe Page</a>
-        <a href="./CatBlog.html">Cat Blog</a>
-        <a href="./HotelFeedback.html">Hotel Feedback</a>
-        <a href="./BookTable.html">Book Catalog</a>
-        <a href="./Cafe.html">Cafe Menu</a>
-        <a href="./BusinessCard.html">Business Card</a>
-        <a href="./BlogPostCard.html">Blog Post Card</a>
-        <a href="./JobApplicationForm.html">Job Application Form</a>
-        <a href="./RothkoPainting.html">Rothko Painting</a>
+    <!-- Navigatiemenu -->
+    <nav class="navbar">
+        <a href="index.html" class="active">CV</a>
+        <a href="fotoboek.html">Fotoboek</a>
+        <a href="contact.html">Contact</a>
     </nav>
 
+    <header class="page-header">
+        <h1>Max Robert Hoogeweg</h1>
+        <p class="subtitle">HBO ICT Systeemarchitectuur & Softwareontwikkeling</p>
+    </header>
+
+    <main class="content-container">
+        <!-- Inhoudsopgave -->
+        <nav class="toc">
+            <h2>Inhoudsopgave</h2>
+            <ul>
+                <li><a href="#persoonsgegevens">Persoonsgegevens</a></li>
+                <li><a href="#drijfveer">Drijfveer & Motivatie</a></li>
+                <li><a href="#vaardigheden">Programmeertalen & Vaardigheden</a></li>
+                <li><a href="#hobbys">Hobby's & Interesses</a></li>
+                <li><a href="#projects">Voltooide Opdrachten & Labs</a></li>
+            </ul>
+        </nav>
+
+        <section id="persoonsgegevens" class="card">
+            <h2>Persoonsgegevens</h2>
+            <p><strong>Leeftijd:</strong> 20 jaar</p>
+            <p><strong>Woonplaats:</strong> Leeuwarden, Nederland</p>
+            <p><strong>Opleiding:</strong> HBO ICT (NHL Stenden Hogeschool)</p>
+        </section>
+
+        <section id="drijfveer" class="card">
+            <h2>Drijfveer & Motivatie</h2>
+            <p>Als gedreven software-ontwikkelaar en toekomstig Technical Product Owner streef ik ernaar om complexe technische architecturen te vertalen naar gebruiksvriendelijke, schaalbare applicaties. Ik combineer een sterke analytische blik met hands-on praktijkervaring in full-stack webontwikkeling.</p>
+        </section>
+
+        <section id="vaardigheden" class="card">
+            <h2>Programmeertalen</h2>
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Taal / Technologie</th>
+                        <th>Logo</th>
+                        <th>Ervaringsniveau</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>HTML & CSS</td>
+                        <td><a href="https://nl.wikipedia.org/wiki/HTML" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML5 Logo" class="lang-logo"></a></td>
+                        <td>Gevorderd</td>
+                    </tr>
+                    <tr>
+                        <td>C# (.NET / WPF)</td>
+                        <td><a href="https://nl.wikipedia.org/wiki/C_Sharp" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Logo_C_sharp.svg" alt="C Sharp Logo" class="lang-logo"></a></td>
+                        <td>Ervaren</td>
+                    </tr>
+                    <tr>
+                        <td>PHP / Laravel</td>
+                        <td><a href="https://nl.wikipedia.org/wiki/PHP" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg" alt="PHP Logo" class="lang-logo"></a></td>
+                        <td>Ervaren</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="hobbys" class="card">
+            <h2>Hobby's & Interesses</h2>
+            <p>Naast programmeren houd ik me bezig met kickboksen, snowboarding, het herstellen van vintage audioapparatuur en het ontwerpen van maatwerk kleding met mijn naaimachine.</p>
+        </section>
+
+        <section id="projects" class="card">
+            <h2>Voltooide Opdrachten & Labs</h2>
+            <p>Hieronder vind je een verzameling van alle HTML-, CSS- en Flexbox-opdrachten die ik heb gemaakt:</p>
+            
+            <div class="project-grid">
+                <a href="./RecipePage.html" class="project-link">Recipe Page</a>
+                <a href="./WorkingWithLinks.html" class="project-link">Working with Links</a>
+                <a href="./CatBlog.html" class="project-link">Cat Blog</a>
+                <a href="./HotelFeedback.html" class="project-link">Hotel Feedback</a>
+                <a href="./BookTable.html" class="project-link">Book Catalog</a>
+                <a href="./CssDiner.html" class="project-link">CSS Diner</a>
+                <a href="./Cafe.html" class="project-link">Cafe Menu</a>
+                <a href="./BusinessCard.html" class="project-link">Business Card</a>
+                <a href="./BlogPostCard.html" class="project-link">Blog Post Card</a>
+                <a href="./JobApplicationForm.html" class="project-link">Job Application Form</a>
+                <a href="./RothkoPainting.html" class="project-link">Rothko Painting</a>
+                <a href="./FlexboxFroggy.html" class="project-link">Flexbox Froggy</a>
+                <a href="./PhotoGallery.html" class="project-link">Photo Gallery</a>
+                <a href="./PageofPlayingCards.html" class="project-link">Page of Playing Cards</a>
+                <a href="./SchilderijMondraai.html" class="project-link">Schilderij Mondriaan</a>
+            </div>
+        </section>
+    </main>
+
     <footer>
-        <p>&copy; 2026 • Built with clean code</p>
+        <p>&copy; 2026 Max Robert Hoogeweg</p>
     </footer>
 
 </body>
