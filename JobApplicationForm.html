@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Form</title>
+    <link rel="stylesheet" href="JobApplicationForm.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Join Our Team</h1>
+        <form>
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required placeholder="e.g., Jane Doe">
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required placeholder="e.g., jane@example.com">
+
+            <label for="position">Desired Position:</label>
+            <select id="position" name="position" required>
+                <option value="" disabled selected>Select a position</option>
+                <option value="frontend">Frontend Developer</option>
+                <option value="backend">Backend Developer</option>
+                <option value="fullstack">Full Stack Engineer</option>
+                <option value="product">Technical Product Owner</option>
+            </select>
+
+            <fieldset class="radio-group">
+                <legend>Availability</legend>
+                
+                <div class="radio-option">
+                    <input type="radio" id="full-time" name="availability" value="full-time" required>
+                    <label for="full-time">Full-Time</label>
+                </div>
+                
+                <div class="radio-option">
+                    <input type="radio" id="part-time" name="availability" value="part-time">
+                    <label for="part-time">Part-Time</label>
+                </div>
+                
+                <div class="radio-option">
+                    <input type="radio" id="contract" name="availability" value="contract">
+                    <label for="contract">Contract</label>
+                </div>
+            </fieldset>
+
+            <label for="message">Cover Letter / Message:</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell us about your experience..." required></textarea>
+
+            <button type="submit">Submit Application</button>
+        </form>
+    </div>
+</body>
+</html>

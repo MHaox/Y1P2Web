@@ -1,0 +1,123 @@
+body {
+    background-color: #0f172a;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #f8fafc;
+    margin: 0;
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #1e293b;
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1.25rem;
+    border: 2px solid #475569;
+    border-radius: 6px;
+    background-color: #0f172a;
+    color: #f8fafc;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+/* First input unique styling */
+input:first-of-type {
+    border-radius: 12px;
+}
+
+/* Focus pseudo-class and outline removal */
+input:focus, textarea:focus {
+    border-color: #38bdf8;
+    outline: none;
+}
+
+/* Invalid pseudo-class in exact required list order */
+input:invalid, select:invalid, textarea:invalid {
+    border-color: red;
+}
+
+/* Valid pseudo-class in exact required list order */
+input:valid, select:valid, textarea:valid {
+    border-color: green;
+}
+
+.radio-group {
+    border: 2px solid #475569;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.radio-group legend {
+    font-weight: 600;
+    padding: 0 0.5rem;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.radio-option input[type="radio"] {
+    width: auto;
+    margin-right: 0.5rem;
+    margin-bottom: 0;
+}
+
+/* Radio checked pseudo-class styling */
+.radio-group input[type="radio"]:checked {
+    border-color: #38bdf8;
+    background-color: #38bdf8;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+}
+
+/* Radio checked label color change */
+.radio-group input[type="radio"]:checked + label {
+    color: #38bdf8;
+    font-weight: bold;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+/* Button hover pseudo-class */
+button:hover {
+    background-color: #2563eb;
+}
