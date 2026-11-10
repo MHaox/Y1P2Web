@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Catalog</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            margin-bottom: 1.5rem;
+            color: #0f172a;
+        }
+        table {
+            width: 85%;
+            max-width: 900px;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        thead {
+            background-color: #3b82f6;
+            color: white;
+        }
+        tbody tr:hover {
+            background-color: #f1f5f9;
+        }
+        tfoot {
+            background-color: #f1f5f9;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Library Book Catalog</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Publication Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>The Hobbit</td>
+                <td>J.R.R. Tolkien</td>
+                <td>Fantasy</td>
+                <td>1937</td>
+            </tr>
+            <tr>
+                <td>1984</td>
+                <td>George Orwell</td>
+                <td>Dystopian</td>
+                <td>1949</td>
+            </tr>
+            <tr>
+                <td>To Kill a Mockingbird</td>
+                <td>Harper Lee</td>
+                <td>Classic Fiction</td>
+                <td>1960</td>
+            </tr>
+            <tr>
+                <td>Pride and Prejudice</td>
+                <td>Jane Austen</td>
+                <td>Romance</td>
+                <td>1813</td>
+            </tr>
+            <tr>
+                <td>The Great Gatsby</td>
+                <td>F. Scott Fitzgerald</td>
+                <td>Tragedy</td>
+                <td>1925</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">Total Books: 5</td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>
