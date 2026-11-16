@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHL Café - Bestelsysteem</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .nav-tabs .nav-link.active {
+            border-bottom-color: #fff;
+            font-weight: 500;
+            color: #495057;
+        }
+        .nav-tabs .nav-link {
+            color: #0d6efd;
+        }
+        .cursor-pointer {
+            cursor: pointer;
+            user-select: none;
+        }
+        .cursor-pointer:hover {
+            opacity: 0.75;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Navigatiebalk -->
+    <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom pb-md-0 pt-2">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand text-secondary fs-5 pb-md-2" href="#">NHL Café</a>
+            
+            <button class="navbar-toggler mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#cafeNavbar" aria-controls="cafeNavbar" aria-expanded="false" aria-label="Menu wisselen">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="cafeNavbar">
+                <ul class="nav nav-tabs border-bottom-0 w-100 justify-content-around" id="cafeTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active px-4 py-2" id="bestellen-tab" data-bs-toggle="tab" data-bs-target="#bestellen" type="button" role="tab">Bestellen</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link px-4 py-2" id="overzicht-tab" data-bs-toggle="tab" data-bs-target="#overzicht" type="button" role="tab">Overzicht</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link px-4 py-2" id="alles-betalen-tab" data-bs-toggle="tab" data-bs-target="#alles-betalen" type="button" role="tab">Alles betalen</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link px-4 py-2" id="per-persoon-tab" data-bs-toggle="tab" data-bs-target="#per-persoon" type="button" role="tab">Per persoon betalen</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hoofdcontent -->
+    <main class="container-fluid px-4 py-4">
+        <!-- Feedback melding bij acties -->
+        <div id="feedback-alert" class="alert alert-success alert-dismissible fade d-none" role="alert">
+            <span id="feedback-text"></span>
+            <button type="button" class="btn-close" onclick="hideFeedback()"></button>
+        </div>
+
+        <div class="tab-content" id="cafeTabsContent">
+
+            <!-- 1. PAGINA: BESTELLEN -->
+            <div class="tab-pane fade show active" id="bestellen" role="tabpanel">
+                <h1 class="display-6 fw-normal mb-4">Bestellen</h1>
+
+                <div class="row g-4">
+                    <!-- Kolom 1: Categorieën -->
+                    <div class="col-6 col-md-3">
+                        <div class="list-group" id="category-list"></div>
+                    </div>
+
+                    <!-- Kolom 2: Producten binnen geselecteerde categorie -->
+                    <div class="col-6 col-md-3">
+                        <div class="list-group" id="product-list"></div>
+                    </div>
+
+                    <!-- Kolom 3: Huidige bestelling -->
+                    <div class="col-12 col-md-6">
+                        <div class="table-responsive">
+                            <table class="table table-striped align-middle">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="w-50">Product</th>
+                                        <th scope="col" class="text-center">Amount</th>
+                                        <th scope="col" class="text-end"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="current-order-body"></tbody>
+                            </table>
+                        </div>
+                        <div class="text-end mt-3">
+                            <button type="button" class="btn btn-primary btn-lg px-4" onclick="placeOrder()">Bestel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. PAGINA: OVERZICHT -->
+            <div class="tab-pane fade" id="overzicht" role="tabpanel">
+                <h1 class="display-6 fw-normal mb-4">Overzicht</h1>
+
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="w-50">Product</th>
+                                <th scope="col">Hoeveelheid</th>
+                                <th scope="col">Prijs</th>
+                                <th scope="col">Totaal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="overzicht-body"></tbody>
+                        <tfoot>
+                            <tr class="border-top">
+                                <td colspan="3"></td>
+                                <td class="fw-bold py-3" id="overzicht-total">$0.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                    <button type="button" class="btn btn-primary btn-lg" onclick="switchTab('alles-betalen-tab')">Alles betalen</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="switchTab('per-persoon-tab')">Betalen per persoon</button>
+                </div>
+            </div>
+
+            <!-- 3. PAGINA: ALLES BETALEN / REKENING -->
+            <div class="tab-pane fade" id="alles-betalen" role="tabpanel">
+                <h1 class="display-6 fw-normal mb-4">Rekening</h1>
+
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="w-50">Product</th>
+                                <th scope="col">Nog te betalen</th>
+                                <th scope="col">Prijs</th>
+                                <th scope="col">Totaal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rekening-body"></tbody>
+                        <tfoot>
+                            <tr class="border-top">
+                                <td colspan="3"></td>
+                                <td class="fw-bold py-3" id="rekening-total">€0.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="text-end mt-3">
+                    <button type="button" class="btn btn-primary btn-lg px-4" onclick="payAll()">Betalen</button>
+                </div>
+            </div>
+
+            <!-- 4. PAGINA: PER PERSOON BETALEN -->
+            <div class="tab-pane fade" id="per-persoon" role="tabpanel">
+                <h1 class="display-6 fw-normal mb-4">Per persoon betalen</h1>
+
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="w-50">Product</th>
+                                <th scope="col">Aantal</th>
+                                <th scope="col">Prijs</th>
+                                <th scope="col">Totaal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="split-body"></tbody>
+                        <tfoot>
+                            <tr class="border-top">
+                                <td colspan="3" class="fw-bold py-3">Te betalen</td>
+                                <td class="fw-bold py-3" id="split-total">€0.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="text-end mt-3">
+                    <button type="button" class="btn btn-primary btn-lg px-4" onclick="paySplit()">Betalen</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- 1. MENUKAART DATA ---
+        const menuData = {
+            "Frisdrank": [
+                { name: "Cola", price: 2.50 },
+                { name: "Fanta", price: 2.50 },
+                { name: "Sprite", price: 2.50 },
+                { name: "Ice Tea", price: 2.75 }
+            ],
+            "Bier": [
+                { name: "Amstel Vaasje", price: 3.00 },
+                { name: "Franziskaner Weisbier 0.5L", price: 5.00 },
+                { name: "Hertog Jan 0.25L", price: 3.25 },
+                { name: "Radler 0.0%", price: 3.00 }
+            ],
+            "Wijn": [
+                { name: "Witte Wijn Droog", price: 4.00 },
+                { name: "Witte Wijn Zoet", price: 4.00 },
+                { name: "Rode Wijn Merlot", price: 4.25 },
+                { name: "Rosé", price: 4.00 }
+            ],
+            "Koffie": [
+                { name: "Koffie Normaal", displayName: "Normaal", price: 2.50 },
+                { name: "Cappuccino", price: 3.00 },
+                { name: "Latte", price: 3.25 },
+                { name: "Koffie Verkeerd", displayName: "Verkeerd", price: 3.00 }
+            ],
+            "Thee": [
+                { name: "Verse Muntthee", price: 3.25 },
+                { name: "Earl Grey", price: 2.50 },
+                { name: "Groene Thee", price: 2.50 },
+                { name: "Rooibos", price: 2.50 }
+            ],
+            "Hapjes": [
+                { name: "Bitterballen (8 stuks)", price: 6.50 },
+                { name: "Nacho's uit de oven", price: 8.50 },
+                { name: "Kaasstengels", price: 6.00 },
+                { name: "Broodplankje", price: 5.50 }
+            ]
+        };
+
+        // --- 2. APPLICATIE STATE (Voorgevuld zoals in de mock-ups) ---
+        let activeCategory = "Koffie";
+
+        // Lopende bestelling op pagina 1 ('Bestellen')
+        let currentOrder = [
+            { name: "Cola", price: 2.50, amount: 2 },
+            { name: "Fanta", price: 2.50, amount: 3 },
+            { name: "Koffie Normaal", price: 2.50, amount: 0 },
+            { name: "Franziskaner Weisbier 0.5L", price: 5.00, amount: 4 }
+        ];
+
+        // Geplaatste bestellingen op de rekening ('Overzicht', 'Alles betalen', 'Per persoon')
+        // totalOrdered = totaal ooit besteld, remaining = nog te betalen, splitSelect = geselecteerd voor persoon
+        let tabItems = [
+            { name: "Cola", price: 2.50, totalOrdered: 2, remaining: 1, splitSelect: 2 },
+            { name: "Fanta", price: 2.50, totalOrdered: 5, remaining: 5, splitSelect: 1 },
+            { name: "Franziskaner Weisbier 0.5L", price: 5.00, totalOrdered: 2, remaining: 0, splitSelect: 0 }
+        ];
+
+        // --- 3. RENDER FUNCTIES ---
+
+        function renderCategories() {
+            const container = document.getElementById("category-list");
+            container.innerHTML = "";
+
+            Object.keys(menuData).forEach(category => {
+                const isActive = category === activeCategory;
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = `list-group-item list-group-item-action py-3 ${isActive ? "active" : ""}`;
+                if (isActive) btn.setAttribute("aria-current", "true");
+                btn.textContent = category;
+                btn.onclick = () => {
+                    activeCategory = category;
+                    renderCategories();
+                    renderProducts();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        function renderProducts() {
+            const container = document.getElementById("product-list");
+            container.innerHTML = "";
+
+            const items = menuData[activeCategory] || [];
+            items.forEach(item => {
+                const row = document.createElement("div");
+                row.className = "list-group-item d-flex justify-content-between align-items-center py-3";
+                row.innerHTML = `
+                    <span>${item.displayName || item.name}</span>
+                    <i class="bi bi-plus-circle-fill text-primary fs-5 cursor-pointer" title="Toevoegen aan bestelling"></i>
+                `;
+                row.querySelector("i").onclick = () => addToCurrentOrder(item.name, item.price);
+                container.appendChild(row);
+            });
+
+            // De '...' placeholder onderaan zoals in de mock-up
+            const dots = document.createElement("div");
+            dots.className = "list-group-item py-3 text-muted";
+            dots.textContent = "...";
+            container.appendChild(dots);
+        }
+
+        function renderCurrentOrder() {
+            const tbody = document.getElementById("current-order-body");
+            tbody.innerHTML = "";
+
+            if (currentOrder.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="text-muted py-3">Nog geen producten geselecteerd.</td></tr>`;
+                return;
+            }
+
+            currentOrder.forEach((item, index) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td class="py-3">${item.name}</td>
+                    <td class="text-center py-3">
+                        <i class="bi bi-dash-circle-fill cursor-pointer" onclick="updateCurrentAmount(${index}, -1)"></i>
+                        <span class="text-success fw-semibold mx-2">${item.amount}</span>
+                        <i class="bi bi-plus-circle-fill cursor-pointer" onclick="updateCurrentAmount(${index}, 1)"></i>
+                    </td>
+                    <td class="text-end pe-3 py-3">
+                        <i class="bi bi-trash-fill cursor-pointer" onclick="removeCurrentItem(${index})"></i>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderOverzicht() {
+            const tbody = document.getElementById("overzicht-body");
+            tbody.innerHTML = "";
+            let grandTotal = 0;
+
+            tabItems.forEach((item, index) => {
+                const rowTotal = item.remaining * item.price;
+                grandTotal += rowTotal;
+
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td class="py-3">${item.name}</td>
+                    <td class="py-3">
+                        <i class="bi bi-dash-circle-fill cursor-pointer" onclick="updateOverzichtAmount(${index}, -1)"></i>
+                        <span class="text-success fw-semibold mx-2">${item.remaining}</span>
+                        <i class="bi bi-plus-circle-fill cursor-pointer" onclick="updateOverzichtAmount(${index}, 1)"></i>
+                    </td>
+                    <td class="py-3">$${item.price.toFixed(2)}</td>
+                    <td class="py-3">$${rowTotal.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById("overzicht-total").textContent = `$${grandTotal.toFixed(2)}`;
+        }
+
+        function renderRekening() {
+            const tbody = document.getElementById("rekening-body");
+            tbody.innerHTML = "";
+            let grandTotal = 0;
+
+            tabItems.forEach(item => {
+                const rowTotal = item.remaining * item.price;
+                grandTotal += rowTotal;
+                const statusColor = item.remaining === 0 ? "text-success" : "text-warning";
+
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td class="py-3">${item.name}</td>
+                    <td class="py-3 ${statusColor}">${item.remaining} van ${item.totalOrdered}</td>
+                    <td class="py-3">€${item.price.toFixed(2)}</td>
+                    <td class="py-3">€${rowTotal.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById("rekening-total").textContent = `€${grandTotal.toFixed(2)}`;
+        }
+
+        function renderSplit() {
+            const tbody = document.getElementById("split-body");
+            tbody.innerHTML = "";
+            let splitTotal = 0;
+
+            tabItems.forEach((item, index) => {
+                // Toon alleen producten die nog openstaan op de rekening
+                if (item.remaining <= 0) return;
+
+                // Zorg dat splitSelect nooit hoger is dan wat nog openstaat
+                if (item.splitSelect > item.remaining) {
+                    item.splitSelect = item.remaining;
+                }
+
+                const rowTotal = item.splitSelect * item.price;
+                splitTotal += rowTotal;
+
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td class="py-3">${item.name}</td>
+                    <td class="py-3">
+                        <i class="bi bi-dash-circle-fill cursor-pointer" onclick="updateSplitAmount(${index}, -1)"></i>
+                        <span class="text-success fw-semibold mx-2">${item.splitSelect}</span>
+                        <i class="bi bi-plus-circle-fill cursor-pointer" onclick="updateSplitAmount(${index}, 1)"></i>
+                        <span class="text-success ms-2">van ${item.remaining}</span>
+                    </td>
+                    <td class="py-3">€${item.price.toFixed(2)}</td>
+                    <td class="py-3">€${rowTotal.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            if (tbody.innerHTML === "") {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-muted py-3">Alles op deze tafel is al betaald!</td></tr>`;
+            }
+
+            document.getElementById("split-total").textContent = `€${splitTotal.toFixed(2)}`;
+        }
+
+        function renderAll() {
+            renderCategories();
+            renderProducts();
+            renderCurrentOrder();
+            renderOverzicht();
+            renderRekening();
+            renderSplit();
+        }
+
+        // --- 4. INTERACTIE LOGICA ---
+
+        function addToCurrentOrder(name, price) {
+            const existing = currentOrder.find(i => i.name === name);
+            if (existing) {
+                existing.amount += 1;
+            } else {
+                currentOrder.push({ name, price, amount: 1 });
+            }
+            renderCurrentOrder();
+        }
+
+        function updateCurrentAmount(index, delta) {
+            const newAmount = currentOrder[index].amount + delta;
+            if (newAmount >= 0) {
+                currentOrder[index].amount = newAmount;
+                renderCurrentOrder();
+            }
+        }
+
+        function removeCurrentItem(index) {
+            currentOrder.splice(index, 1);
+            renderCurrentOrder();
+        }
+
+        function placeOrder() {
+            const validItems = currentOrder.filter(i => i.amount > 0);
+            if (validItems.length === 0) {
+                showFeedback("Voeg eerst producten met een aantal groter dan 0 toe.", "warning");
+                return;
+            }
+
+            validItems.forEach(orderItem => {
+                const existingTab = tabItems.find(t => t.name === orderItem.name);
+                if (existingTab) {
+                    existingTab.totalOrdered += orderItem.amount;
+                    existingTab.remaining += orderItem.amount;
+                } else {
+                    tabItems.push({
+                        name: orderItem.name,
+                        price: orderItem.price,
+                        totalOrdered: orderItem.amount,
+                        remaining: orderItem.amount,
+                        splitSelect: 0
+                    });
+                }
+            });
+
+            currentOrder = [];
+            renderAll();
+            showFeedback("Bestelling is doorgegeven naar het overzicht!", "success");
+            switchTab("overzicht-tab");
+        }
+
+        function updateOverzichtAmount(index, delta) {
+            const item = tabItems[index];
+            const newRemaining = item.remaining + delta;
+            if (newRemaining >= 0) {
+                item.remaining = newRemaining;
+                if (item.remaining > item.totalOrdered) {
+                    item.totalOrdered = item.remaining;
+                }
+                renderOverzicht();
+                renderRekening();
+                renderSplit();
+            }
+        }
+
+        function updateSplitAmount(index, delta) {
+            const item = tabItems[index];
+            const nextVal = item.splitSelect + delta;
+            if (nextVal >= 0 && nextVal <= item.remaining) {
+                item.splitSelect = nextVal;
+                renderSplit();
+            }
+        }
+
+        function payAll() {
+            const totalOpen = tabItems.reduce((sum, i) => sum + (i.remaining * i.price), 0);
+            if (totalOpen === 0) {
+                showFeedback("De rekening staat al op €0.00.", "info");
+                return;
+            }
+
+            tabItems.forEach(item => {
+                item.remaining = 0;
+                item.splitSelect = 0;
+            });
+
+            renderAll();
+            showFeedback(`Volledige rekening van €${totalOpen.toFixed(2)} is afgerekend!`, "success");
+        }
+
+        function paySplit() {
+            let paidAmount = 0;
+            tabItems.forEach(item => {
+                if (item.splitSelect > 0) {
+                    paidAmount += item.splitSelect * item.price;
+                    item.remaining -= item.splitSelect;
+                    item.splitSelect = 0;
+                }
+            });
+
+            if (paidAmount === 0) {
+                showFeedback("Selecteer eerst met + welke drankjes deze persoon afrekent.", "warning");
+                return;
+            }
+
+            renderAll();
+            showFeedback(`Deelbetaling van €${paidAmount.toFixed(2)} is verwerkt!`, "success");
+        }
+
+        // --- 5. HULPFUNCTIES ---
+
+        function switchTab(tabId) {
+            const tabTrigger = document.getElementById(tabId);
+            if (tabTrigger) {
+                const tab = new bootstrap.Tab(tabTrigger);
+                tab.show();
+            }
+            // Sluit mobiel hamburger menu automatisch na klikken
+            const navbarCollapse = document.getElementById("cafeNavbar");
+            if (navbarCollapse.classList.contains("show")) {
+                new bootstrap.Collapse(navbarCollapse).hide();
+            }
+        }
+
+        function showFeedback(message, type = "success") {
+            const alertBox = document.getElementById("feedback-alert");
+            alertBox.className = `alert alert-${type} alert-dismissible fade show`;
+            document.getElementById("feedback-text").textContent = message;
+        }
+
+        function hideFeedback() {
+            const alertBox = document.getElementById("feedback-alert");
+            alertBox.classList.add("d-none");
+            alertBox.classList.remove("show");
+        }
+
+        // Initialiseer de pagina bij het laden
+        renderAll();
+    </script>
+</body>
+</html>
